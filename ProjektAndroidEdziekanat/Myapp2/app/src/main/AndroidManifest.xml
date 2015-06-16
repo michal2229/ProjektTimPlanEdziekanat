@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AktywnoscLogowania"
+            android:label="@string/title_activity_aktywnosc_logowania"
+            android:parentActivityName=".MainActivity7" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.michal_229.myapp2.MainActivity7" />
+        </activity>
     </application>
 
 </manifest>

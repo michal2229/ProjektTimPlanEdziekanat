@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="password_">haslo</string>
+    <string name="username_">login</string>
+    <string name="cancel">\"Cancel\"</string>
+    <string name="title_activity_aktywnosc_logowania">AktywnoscLogowania</string>
 </resources>

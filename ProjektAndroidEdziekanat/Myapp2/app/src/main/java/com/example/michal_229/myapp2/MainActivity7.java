@@ -1,5 +1,9 @@
 package com.example.michal_229.myapp2;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -55,8 +59,8 @@ public class MainActivity7 extends ActionBarActivity {
     Button buttonCalyPlan, buttonNajblizszyPlan, buttonEksport, buttonZalogujEdziekanat, buttonZalogujGoogle;
     EditText editTextInformacje;
 
-    String login = "";
-    String password = "";
+    String login = null;
+    String password = null;
     boolean loggedToEdziekanat = false;
     boolean loggedToGoogle = false;
 
@@ -70,24 +74,47 @@ public class MainActivity7 extends ActionBarActivity {
 
         buttonCalyPlan = (Button) findViewById(R.id.buttonCalyPlan);
         buttonNajblizszyPlan = (Button) findViewById(R.id.buttonNajblizszyPlan);
-        buttonEksport = (Button) findViewById(R.id.buttonEksport);
         buttonZalogujEdziekanat = (Button) findViewById(R.id.buttonZalogujEdziekanat);
-        buttonZalogujGoogle = (Button) findViewById(R.id.buttonZalogujGoogle);
 
         editTextInformacje = (EditText) findViewById(R.id.editTextInformacje);
+
+        SharedPreferences settings = getSharedPreferences("asdf", 0);
+        login = settings.getString("login","loginDefaultValue");
+        password = settings.getString("pass","passDefaultValue");
+
+        if (pl == null) {
+            if (login != null && password != null) {
+                pw.execute();
+            }
+            else {
+                startActivity(new Intent(MainActivity7.this, AktywnoscLogowania.class));
+            }
+        }
+        else {
+            editTextInformacje.setText(pl.getNajblizszeLekcje(12).toString());
+        }
+
+
+        //editTextInformacje.setText("nie otrzymano danych");
+
+        /*if (login != null || password != null) loggedToEdziekanat = true;
 
         if (!loggedToEdziekanat) {
             editTextInformacje.setText("musisz sie zalogowac!");
         }
         else {
             pw.execute();
-        }
+        }*/
+
 
         buttonCalyPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //pw = new PlanWorker(0);
                 //pw.execute();
+
+
+
                 if (pl != null)
                     editTextInformacje.setText(pl.toString());
                 else if (loggedToEdziekanat)
@@ -113,59 +140,33 @@ public class MainActivity7 extends ActionBarActivity {
             }
         });
 
-        buttonEksport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (pl != null) {
-                    editTextInformacje.setText("tu nastapi eksport");
-                    if (loggedToGoogle)
-                        editTextInformacje.setText("tu nastapi eksport do googla");
-                    else
-                        editTextInformacje.setText("musisz się zalogować do google!");
-                }
-                else if (loggedToEdziekanat)
-                    editTextInformacje.setText("nie otrzymano danych");
-                else
-                    editTextInformacje.setText("musisz się zalogować do edziekanatu!");
-            }
-        });
+
 
 
         buttonZalogujEdziekanat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!loggedToEdziekanat) {
-                    // logowanie
-                    login = "loginloginlogin";
-                    password = "upasspasspassl";
+                //if (!loggedToEdziekanat) {
 
-                    loggedToEdziekanat = true;
 
-                    // zakladam, ze juz zalogowano
-                    pw.execute();
-                }
-                else {
-                    editTextInformacje.setText("jestes juz zalogowany!");
-                }
+                startActivity(new Intent(MainActivity7.this, AktywnoscLogowania.class));
+
+                //    try {
+                //        pw.execute();
+                //        loggedToEdziekanat = true;
+                //    }
+                //    catch (Exception e) {
+                //        editTextInformacje.setText("błąd połączenia");
+                //    }
+                //}
+                //else {
+                //    editTextInformacje.setText("jestes juz zalogowany!");
+                //}
             }
         });
 
 
-        buttonZalogujGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!loggedToGoogle) {
-                    // logowanie
 
-                    loggedToGoogle = true;
-
-                    // zakladam, ze juz zalogowano
-                }
-                else {
-                    editTextInformacje.setText("jestes juz zalogowany!");
-                }
-            }
-        });
     }
 
     @Override
@@ -224,7 +225,7 @@ public class MainActivity7 extends ActionBarActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            editTextInformacje.setText("");
+            //editTextInformacje.setText("");
             try {
                 initCertificateManager();
             } catch (NoSuchAlgorithmException e) {
@@ -242,8 +243,6 @@ public class MainActivity7 extends ActionBarActivity {
             //Scanner in = new Scanner(System.in);
             //System.out.print("login: "); login = in.nextLine();
             //System.out.print("password: "); password = in.nextLine();
-            //login = "loginloginlogin";
-            //password = "upasspasspassl";
 
             //publishProgress("ignorowanie certyfikatow");
 
@@ -254,25 +253,29 @@ public class MainActivity7 extends ActionBarActivity {
 
                 //publishProgress("tworzenie planu");
 
-                planLekcji = new PlanLekcji();
+
                 //publishProgress("wypelnianie planu");
 
                 try {
+                    planLekcji = new PlanLekcji();
                     wypelnijPlanLekcjami(planLekcji);
-                    //System.out.println(planLekcji.toString());
-                    switch (opcja) {
-                        case 0:
-                            publishProgress(planLekcji.toString());
-                            pl = planLekcji;
-                            break;
-                        case 1:
-                            publishProgress(planLekcji.getNajblizszeLekcje(12).toString());
-                            pl = planLekcji;
-                            break;
-                        default:
-                            publishProgress("zalogowano");
-                            pl = planLekcji;
-                            break;
+                    if (planLekcji.toString().length() > 50)
+                        switch (opcja) {
+                            case 0:
+                                publishProgress(planLekcji.toString());
+                                pl = planLekcji;
+                                break;
+                            case 1:
+                                publishProgress(planLekcji.getNajblizszeLekcje(12).toString());
+                                pl = planLekcji;
+                                break;
+                            default:
+                                publishProgress(planLekcji.getNajblizszeLekcje(12).toString());
+                                pl = planLekcji;
+                                break;
+                        }
+                    else {
+                        publishProgress("błąd logowania");
                     }
 
                 } catch (IOException e) {
@@ -291,7 +294,8 @@ public class MainActivity7 extends ActionBarActivity {
 
 
 
-
+            if (planLekcji == null)
+                startActivity(new Intent(MainActivity7.this, AktywnoscLogowania.class));
 
             return null;
         }
@@ -300,7 +304,7 @@ public class MainActivity7 extends ActionBarActivity {
         protected void onProgressUpdate(String... values) {
             //super.onProgressUpdate(values);
             //editTextInformacje.setText(StringUtil.join(Arrays.asList(values), " "));
-            editTextInformacje.append("\n" + values[0]);
+            editTextInformacje.setText(values[0]);
         }
 
         @Override
@@ -374,7 +378,11 @@ public class MainActivity7 extends ActionBarActivity {
             String getPlan = "&mid=" + mid + "&iid="+iid+"&vrf="+vrf+"&rdo=1&pos=0&exv="+grupa+"&vrf=!125&rdo=1&pos=0"; // url wymuszajacy przekierowanie (status 302 -> 200), ominiecie &t=xxxxxxx
             tempUrl = url_ + "logged.php?" + sid + getPlan;                                 System.out.println(tempUrl);
             res = Jsoup.connect(tempUrl).method(Connection.Method.GET).timeout(10000).execute();
-            tempDoc = res.parse();                                                          //System.out.println(tempDoc.body().html());
+
+
+
+            tempDoc = res.parse();
+                                                            //System.out.println(tempDoc.body().html())
 
             //pobieranie dat poniedzialkow
             Elements daty = tempDoc.select("th.thFormList1HSheTeaGrpHTM3");
