@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity7"
+    android:clickable="false">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cały plan"
+        android:id="@+id/buttonCalyPlan"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/buttonZalogujEdziekanat"
+        android:layout_toStartOf="@+id/buttonZalogujEdziekanat" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="najbliższe zajęcia"
+        android:id="@+id/buttonNajblizszyPlan"
+        android:layout_alignBottom="@+id/buttonEksport"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/buttonEksport"
+        android:layout_below="@+id/buttonCalyPlan"
+        android:layout_toLeftOf="@+id/buttonEksport" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="eksport do kalendarza"
+        android:id="@+id/buttonEksport"
+        android:layout_below="@+id/buttonZalogujGoogle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/buttonZalogujGoogle"
+        android:layout_alignStart="@+id/buttonZalogujGoogle"
+        android:textSize="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextInformacje"
+        android:background="#ffdfdfdf"
+        android:layout_below="@+id/buttonEksport"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/buttonEksport"
+        android:layout_alignEnd="@+id/buttonEksport"
+        android:maxLines="600"
+        android:editable="false"
+        android:enabled="true"
+        android:layout_alignParentBottom="true"
+        android:textIsSelectable="false"
+        android:textAlignment="center" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zaloguj do\nedziekanat"
+        android:id="@+id/buttonZalogujEdziekanat"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="10dp"
+        android:textAlignment="center"
+        android:layout_toRightOf="@+id/buttonNajblizszyPlan"
+        android:layout_toEndOf="@+id/buttonNajblizszyPlan" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zaloguj do google"
+        android:id="@+id/buttonZalogujGoogle"
+        android:layout_below="@+id/buttonZalogujEdziekanat"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="10dp" />
+
+</RelativeLayout>
