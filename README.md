@@ -1,6 +1,6 @@
 # TIM - lab - plan #
 
-### proste wyciąganie danych z e-dziekanatu + aplikacja w androidzie ###
+### proste wyciąganie danych z e-dziekanatu + aplikacja na Androida ###
 
 * Działanie ogranicza się do tego, że loguje się na e-dziekanat (ignorując po drodze wszelkie certyfikaty), przechodzi na stronę z planem, parsuje tabelkę na stronie i wyswietla odpowiednią listę zajęć. 
 * Nie udało mi się zrobić tego przez pobranie eksportu planu do csv.
